@@ -1,4 +1,4 @@
-/*!
+/**
  * alertify.js
  * browser dialogs never looked so good
  *
@@ -11,7 +11,7 @@
  */
 (function (global, document, undefined) {
 var AlertifyProto = (function () {
-    
+
 
     var AlertifyProto,
         add,
@@ -83,7 +83,7 @@ var AlertifyProto = (function () {
     return AlertifyProto;
 }());
 var Alertify = (function () {
-    
+
 
     var Alertify = function () {};
     Alertify.prototype = AlertifyProto;
@@ -92,7 +92,7 @@ var Alertify = (function () {
     return Alertify;
 }());
 var validate = (function () {
-    
+
 
     var _checkValidation,
         validate;
@@ -142,13 +142,13 @@ var validate = (function () {
         },
         isString: function (param, optional) {
             return _checkValidation("string", param, optional);
-        },
+        }
     };
 
     return validate;
 }());
 var element = (function () {
-    
+
 
     var element = {},
         setAttributes;
@@ -214,7 +214,7 @@ var element = (function () {
     return element;
 }());
 var transition = (function () {
-    
+
 
     var transition;
 
@@ -254,7 +254,7 @@ var transition = (function () {
     return transition();
 }());
 var keys = (function () {
-    
+
 
     var keys = {
         ENTER : 13,
@@ -265,7 +265,7 @@ var keys = (function () {
     return keys;
 }());
 var Dialog = (function () {
-    
+
 
     var dialog,
         _dialog = {};
@@ -488,8 +488,13 @@ var Dialog = (function () {
             var cover = element.create("div", { classes: clsCoverHide }),
                 el    = element.create("section", { classes: clsElHide });
 
-            document.body.appendChild(cover);
-            document.body.appendChild(el);
+            if (window.FullScreenElement) {
+                window.FullScreenElement.appendChild(cover);
+                window.FullScreenElement.appendChild(el);
+            } else {
+                document.body.appendChild(cover);
+                document.body.appendChild(el);
+            }
             element.ready(cover);
             element.ready(el);
             dialog.cover = cover;
@@ -630,7 +635,7 @@ var Dialog = (function () {
     return new Dialog();
 }());
 var Log = (function () {
-    
+
 
     var Log,
         onTransitionEnd,
@@ -767,7 +772,7 @@ var Log = (function () {
     return Log;
 }());
 var logs = (function () {
-    
+
 
     var init,
         createLog,
@@ -782,7 +787,7 @@ var logs = (function () {
      */
     init = function () {
         var el = element.create("section", { classes: Alertify._prefix + "-logs" });
-        document.body.appendChild(el);
+        (window.FullScreenElement && window.FullScreenElement || document.body).appendChild(el);
         element.ready(el);
         return el;
     };
